@@ -6,7 +6,7 @@
 
 // Your profile photo. Put the file at public/images/profile.jpg, then set:
 //   export const PROFILE_PHOTO = "./images/profile.jpg";
-export const PROFILE_PHOTO = null;
+export const PROFILE_PHOTO = profile.jpeg;
 export const PROFILE_ALT = "Portrait of Mirmahdi Seyedrezaei";
 
 export const MOTTOS = {
