@@ -1,389 +1,461 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import LivingBackground from "./LivingBackground";
 import {
-  PROFILE_PHOTO, PROFILE_ALT, MOTTOS, HUMANITARIAN, NEWS, PERSONAL_PHOTOS, PERSONAL_INTRO,
-  PUBLICATIONS, EDUCATION, EXPERIENCE, TEACHING, MENTORSHIP, AWARDS, SERVICE, PROJECTS,
-} from "./data.js";
+  PROFILE, PROFILE_PHOTO, PROFILE_ALT, HERO, FIELDS, VISION, MOTTOS,
+  NEWS, NEWS_SHOWN, PERSONAL_INTRO, PERSONAL_PHOTOS, RESEARCH, EARLIER, FUNDING,
+  PUBLICATIONS, TALKS, TEACHING, COURSES, MENTORSHIP, SERVICE, HUMANITARIAN,
+  AWARDS, MEDIA, PROJECTS,
+} from "./data";
 
-const SCHOLAR = "https://scholar.google.com/citations?user=O6CRJkMAAAAJ&hl=en";
-const ORCID = "https://orcid.org/0000-0003-4169-200X";
-const LINKEDIN = "https://www.linkedin.com/in/mirmahdi-seyedrezaei/";
-const CV = "./CV_Mirmahdi_Seyedrezaei.pdf";
+const NAV = [
+  ["vision", "Vision"],
+  ["research", "Research"],
+  ["publications", "Publications"],
+  ["teaching", "Teaching"],
+  ["service", "Service"],
+  ["news", "News"],
+  ["contact", "Contact"],
+];
 
-const pad = (n) => String(n).padStart(2, "0");
+const BADGE = { Published: "ok", Submitted: "sub", "In prep": "prep", Funded: "ok", "Under review": "sub" };
 
-/* The page is one day, 06:00 to 18:00. Scroll position sets the sun's place
-   (--p, 0 to 1) and a daylight color temperature readout. */
-function useDayCycle(siteRef, readoutRef) {
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      if (siteRef.current) {
-        siteRef.current.style.setProperty("--p", p.toFixed(4));
-        siteRef.current.dataset.dusk = p > 0.965 ? "on" : "off";
-      }
-      if (readoutRef.current) {
-        const mins = 6 * 60 + p * 12 * 60;
-        const cct = Math.round((3000 + 3500 * Math.sin(Math.PI * p)) / 100) * 100;
-        readoutRef.current.textContent = `${pad(Math.floor(mins / 60))}:${pad(Math.floor(mins % 60))}  ${cct} K`;
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [siteRef, readoutRef]);
-}
-
-function Badge({ status }) {
-  const cls = status === "Published" ? "ok" : status === "Submitted" ? "sub" : "prep";
-  return <span className={"badge " + cls}>{status}</span>;
-}
-
-function fmtDate(d) {
-  if (!d) return "Add date";
-  const [y, m, day] = d.split("-").map(Number);
-  return new Date(y, m - 1, day).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-}
-
-function SectionHead({ id, title, note }) {
+function Section({ id, title, note, children, className = "" }) {
   return (
-    <div className="sec-head">
-      <h2 id={id}>{title}</h2>
-      {note && <span className="note">{note}</span>}
-    </div>
+    <section id={id} className={"sec " + className}>
+      <div className="sec-head">
+        <h2>{title}</h2>
+        {note && <span className="note">{note}</span>}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Ext({ href, children, className }) {
+  if (!href) return null;
+  return (
+    <a className={className} href={href} target="_blank" rel="noreferrer">
+      {children}
+    </a>
+  );
+}
+
+/* Small line icons for the three thrusts, matching Figure 1 of the research statement */
+function ThrustIcon({ i }) {
+  const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" };
+  if (i === 0)
+    return (
+      <svg viewBox="0 0 36 28" width="36" height="28" aria-hidden="true">
+        <circle cx="9" cy="7" r="4.5" {...p} />
+        <path d="M1 26v-6q0-7 8-7t8 7v6" {...p} />
+        <path d="M22 4q5 7 0 14M27 1q7 10 0 20" {...p} />
+      </svg>
+    );
+  if (i === 1)
+    return (
+      <svg viewBox="0 0 38 28" width="38" height="28" aria-hidden="true">
+        <circle cx="7" cy="7" r="4" {...p} />
+        <path d="M0 26v-6q0-6 7-6t7 6v6" {...p} />
+        <circle cx="31" cy="7" r="4" {...p} />
+        <path d="M24 26v-6q0-6 7-6t7 6v6" {...p} />
+        <path d="M19 2v24" {...p} strokeWidth="2.2" />
+      </svg>
+    );
+  return (
+    <svg viewBox="0 0 38 28" width="38" height="28" aria-hidden="true">
+      <path d="M1 27V15L12 6l11 9v12z" {...p} />
+      <path d="M28 24q3-3 0-6t0-6M33 24q3-3 0-6t0-6" {...p} />
+    </svg>
+  );
+}
+
+/* Footer art: a habitat under a night sky, its windows lit and a sensor pulsing. Earth to beyond. */
+function Habitat() {
+  const stars = [[40,30],[120,70],[210,22],[300,58],[390,18],[470,80],[560,34],[640,64],[720,20],[810,48],[900,26],[980,72],[1060,40],[1140,16],[1210,60],[160,110],[620,108],[1000,112],[260,130],[860,124]];
+  return (
+    <svg className="habitat" viewBox="0 0 1240 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      {stars.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={i % 3 ? 1 : 1.6} className={"star s" + (i % 4)} />)}
+      <path d="M0 220 Q620 120 1240 220 Z" className="ground" />
+      <path d="M0 220 Q620 120 1240 220" className="horizon" />
+      <g transform="translate(560 154)">
+        <path d="M0 26 A60 50 0 0 1 120 26 Z" className="dome" />
+        <path d="M20 26 A40 34 0 0 1 100 26 M60 -24 V26" className="rib" />
+        <rect x="34" y="8" width="12" height="9" rx="2" className="win" />
+        <rect x="74" y="8" width="12" height="9" rx="2" className="win w2" />
+        <line x1="96" y1="-14" x2="104" y2="-30" className="rib" />
+        <circle cx="104" cy="-31" r="2.4" className="node" />
+        <circle cx="104" cy="-31" r="7" className="node-ring" />
+      </g>
+    </svg>
   );
 }
 
 export default function App() {
   const siteRef = useRef(null);
-  const readoutRef = useRef(null);
-  useDayCycle(siteRef, readoutRef);
+  const readRef = useRef(null);
+  const [pubType, setPubType] = useState("All");
+  const [firstOnly, setFirstOnly] = useState(false);
+  const [allPubs, setAllPubs] = useState(false);
+  const [allNews, setAllNews] = useState(false);
+  const [open, setOpen] = useState({ 0: true });
 
-  const [filter, setFilter] = useState("All");
-  const [showAllPubs, setShowAllPubs] = useState(false);
-  const [showAllMentees, setShowAllMentees] = useState(false);
+  // Scroll progress drives the sun rail and the light beam on the photo.
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const max = el.scrollHeight - el.clientHeight;
+      const p = max > 0 ? Math.min(1, el.scrollTop / max) : 0;
+      if (siteRef.current) {
+        siteRef.current.style.setProperty("--p", p.toFixed(3));
+        siteRef.current.dataset.dusk = p > 0.92 ? "on" : "off";
+      }
+      if (readRef.current) {
+        // A building's day: 06:00 to 21:00, with daylight rising and falling
+        const mins = 360 + Math.round(p * 900);
+        const hh = String(Math.floor(mins / 60)).padStart(2, "0");
+        const mm = String(mins % 60).padStart(2, "0");
+        const lux = Math.round(40 + 860 * Math.sin(Math.PI * p));
+        readRef.current.textContent = `${hh}:${mm}\n${lux} lx`;
+      }
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const filtered = filter === "All" ? PUBLICATIONS : PUBLICATIONS.filter((p) => p.type === filter);
-  const pubs = showAllPubs ? filtered : filtered.slice(0, 8);
-  const mentees = showAllMentees ? MENTORSHIP : MENTORSHIP.slice(0, 4);
-  const m = MOTTOS;
+  let pubs = PUBLICATIONS.filter((p) => pubType === "All" || p.type === pubType);
+  if (firstOnly) pubs = pubs.filter((p) => p.first);
+  const shownPubs = allPubs ? pubs : pubs.slice(0, 8);
+  const news = allNews ? NEWS : NEWS.slice(0, NEWS_SHOWN);
+  const hasPersonal = PERSONAL_INTRO || PERSONAL_PHOTOS.some((p) => p.src);
 
   return (
     <div className="site" ref={siteRef}>
-      {/* Sun rail: shows where the light is as you move down the page */}
-      <aside className="rail" aria-hidden="true">
-        <div className="rail-track">
-          <div className="rail-sun" />
-        </div>
-        <div className="rail-read" ref={readoutRef}>06:00  3000 K</div>
-        <div className="rail-motto">this too shall pass</div>
-      </aside>
+      <a className="skip" href="#vision">Skip to content</a>
+
+      {/* Sun rail: a small sun travels down as you scroll */}
+      <div className="rail" aria-hidden="true">
+        <div className="rail-track"><div className="rail-sun" /></div>
+        <div className="rail-read" ref={readRef} />
+      </div>
+      <LivingBackground />
 
       <nav className="nav" aria-label="Main">
-        <a className="nav-mark" href="#top">Mirmahdi Seyedrezaei</a>
+        <a className="nav-mark" href="#top">{PROFILE.name}</a>
         <div className="nav-links">
-          <a href="#mottos">Mottos</a>
-          <a href="#research">Research</a>
-          <a href="#publications">Publications</a>
-          <a href="#experience">Experience</a>
-          <a href="#roots">Roots</a>
-          <a href="#news">News</a>
-          <a href="#teaching">Teaching</a>
-          <a href="#personal">Personal</a>
-          <a className="nav-cv" href={CV} target="_blank" rel="noreferrer">CV</a>
+          {NAV.map(([id, label]) => <a key={id} href={"#" + id}>{label}</a>)}
+          <a className="nav-cv" href={PROFILE.cv} target="_blank" rel="noreferrer">CV</a>
         </div>
       </nav>
 
+      {/* ---------------- Hero ---------------- */}
       <header className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow">Ph.D. candidate · Civil Engineering · University of Southern California</p>
-          <h1>Buildings that listen to the people inside them.</h1>
-          <p className="lede">
-            I’m Mirmahdi Seyedrezaei. I study how built environments shape health, safety, and well-being, using
-            human-centered AI, multimodal physiological and environmental sensing, and longitudinal machine-learning
-            methods. The goal is rigorous, deployable work that makes homes, offices, and housing for those who can least
-            afford a bad building adapt to the people in them.
-          </p>
+        <div>
+          <div className="eyebrow">{HERO.eyebrow}</div>
+          <h1 className="hero-name">{PROFILE.name}</h1>
+          <p className="hero-role">{PROFILE.role}</p>
+          <p className="hero-line">{HERO.headline}</p>
+          <p className="lede">{HERO.lede}</p>
+          {HERO.note && <p className="hero-note">{HERO.note}</p>}
+          <p className="hero-status">{HERO.status}</p>
           <div className="cta-row">
-            <a className="btn solid" href={CV} target="_blank" rel="noreferrer">Download CV</a>
-            <a className="btn" href={SCHOLAR} target="_blank" rel="noreferrer">Google Scholar</a>
-            <a className="btn" href={ORCID} target="_blank" rel="noreferrer">ORCID</a>
-            <a className="btn" href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a className="btn" href="mailto:seyedrez@usc.edu">seyedrez@usc.edu</a>
+            <a className="btn solid" href={PROFILE.cv} target="_blank" rel="noreferrer">Download CV</a>
+            {PROFILE.links.map((l) => (
+              <a key={l.label} className="btn" href={l.href} target="_blank" rel="noreferrer">{l.label}</a>
+            ))}
           </div>
         </div>
-
         <figure className="window">
           <div className="arch-box">
-          <div className="arch-outer" />
-          <div className="arch">
-            {PROFILE_PHOTO ? (
-              <img src={PROFILE_PHOTO} alt={PROFILE_ALT} />
-            ) : (
-              <div className="photo-ph">
-                <span>Add profile photo</span>
-                <code>public/images/profile.jpg</code>
-                <code>then set PROFILE_PHOTO in data.js</code>
-              </div>
-            )}
-            <div className="beam" />
+            <div className="arch-outer" />
+            <div className="arch">
+              {PROFILE_PHOTO ? (
+                <img src={PROFILE_PHOTO} alt={PROFILE_ALT} />
+              ) : (
+                <div className="photo-ph"><span>Your photo</span><code>public/images/profile.jpeg</code></div>
+              )}
+              <div className="beam" />
+            </div>
           </div>
           <div className="sill" />
-          </div>
-          <figcaption>The light crossing this window follows you down the page.</figcaption>
         </figure>
       </header>
 
-      {/* ---------- Mottos ---------- */}
-      <section className="sec mottos" aria-labelledby="mottos">
-        <SectionHead id="mottos" title="Three lines I keep" />
-        <p className="motto-1">
-          {m.first.before} <span className="big">{m.first.big}</span> {m.first.mid}{" "}
-          <span className="small">{m.first.small}</span>
-          {m.first.after}
-        </p>
-        <div className="motto-row">
-          <div className="motto-2">
-            <p>{m.second}</p>
-            <span className="cap">The light on this page moves as you scroll.</span>
+      {/* ---------------- Fields ---------------- */}
+      <div className="fields" aria-label="Research areas">
+        {FIELDS.map((f) => (
+          <div className="field" key={f.label}>
+            <strong>{f.label}</strong>
+            <span>{f.note}</span>
           </div>
-          <div className="motto-3">
-            <p className="fa" lang="fa" dir="rtl">{m.verse.fa}</p>
-            <p className="translit">{m.verse.translit}</p>
-            <p className="trans">{m.verse.en}</p>
-            <span className="cap">A line of Persian verse</span>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
-      {/* ---------- Research ---------- */}
-      <section className="sec" aria-labelledby="research">
-        <SectionHead id="research" title="Research" note="three threads, one question: who is the building for?" />
+
+      {/* ---------------- Vision ---------------- */}
+      <Section id="vision" title="Research vision" note="three connected thrusts">
+        <p className="vision-intro">{VISION.intro}</p>
+        <div className="thrusts">
+          {VISION.thrusts.map((t, i) => (
+            <article className="thrust" key={t.num}>
+              <div className="thrust-top">
+                <span className="thrust-icon"><ThrustIcon i={i} /></span>
+                <span className="thrust-num">{t.num}</span>
+                <span className="thrust-verb">{t.verb}</span>
+              </div>
+              <h3>{t.title}</h3>
+              <p>{t.text}</p>
+            </article>
+          ))}
+        </div>
+        <div className="foundation">
+          <b>Shared foundation</b>
+          {VISION.foundation.map((f) => <span key={f}>{f}</span>)}
+        </div>
+      </Section>
+
+      {/* ---------------- News ---------------- */}
+      <Section id="news" title="News">
         <div className="cards three">
-          <article className="card">
-            <p className="tag">Human-centered AI and sensing</p>
-            <h3>Well-being in hybrid work</h3>
-            <p>Longitudinal, multimodal studies linking air quality, temperature, and lighting to workload, mood, stress, and performance at home and in the office.</p>
-            <p className="for">For workers whose home air we almost never measure.</p>
-            <p className="stat">5 cohorts · 60 participants · 109 workspaces</p>
-          </article>
-          <article className="card">
-            <p className="tag">Energy equity</p>
-            <h3>Affordable housing and energy burden</h3>
-            <p>Behavioral, financial, and circuit-level analyses of energy use in low-income housing, informing how solar benefits and demand response reach residents.</p>
-            <p className="for">For residents who pay the bill and had no say in the design.</p>
-            <p className="stat">$8M CEC project · 107 units monitored</p>
-          </article>
-          <article className="card">
-            <p className="tag">Equity framework</p>
-            <h3>The Built Environment–Group–Need model</h3>
-            <p>A systematic-review framework mapping how built environments serve, or fail, vulnerable populations across distributional, recognitional, and procedural dimensions.</p>
-            <p className="for">For the groups the literature has overlooked.</p>
-            <p className="stat">6,731 studies screened · 232 included</p>
-          </article>
+          {news.map((n, i) => (
+            <article className="card" key={i}>
+              {n.image && <div className="news-img"><img src={n.image} alt="" /></div>}
+              <span className="tag">{n.date}</span>
+              <h3>{n.title}</h3>
+              <p>{n.desc}</p>
+              <Ext className="more-link" href={n.link}>{(n.linkLabel || "Read more") + " →"}</Ext>
+            </article>
+          ))}
         </div>
-      </section>
+        {NEWS.length > NEWS_SHOWN && (
+          <button className="more" onClick={() => setAllNews(!allNews)}>
+            {allNews ? "Show less" : `Show all ${NEWS.length}`}
+          </button>
+        )}
+      </Section>
 
-      {/* ---------- Publications ---------- */}
-      <section className="sec" aria-labelledby="publications">
-        <SectionHead id="publications" title="Publications" note={`${PUBLICATIONS.length} total`} />
-        <div className="tabs" role="tablist" aria-label="Filter publications">
+      {/* ---------------- Research ---------------- */}
+      <Section id="research" title="Research" note="projects and findings">
+        {RESEARCH.map((r, i) => (
+          <article className="xp" key={r.title}>
+            <div className="range">{r.range}</div>
+            <div>
+              <h3>{r.title}</h3>
+              <p className="role">{r.role}</p>
+              <div className="chips">{r.tags.map((t) => <span key={t}>{t}</span>)}</div>
+              <p className="xp-sum">{r.summary}</p>
+              {open[i] && (
+                <>
+                  <ul>{r.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
+                  {r.funding && <p className="funding">{r.funding}</p>}
+                </>
+              )}
+              <button className="toggle" aria-expanded={!!open[i]} onClick={() => setOpen({ ...open, [i]: !open[i] })}>
+                {open[i] ? "Hide details" : "Methods and findings"}
+              </button>
+            </div>
+          </article>
+        ))}
+
+        <h3 className="sub-h">Civil engineering roots</h3>
+        {EARLIER.map((e) => (
+          <div className="row" key={e.title}>
+            <div className="range">{e.range}</div>
+            <div>
+              <h3 className="row-h">{e.title}</h3>
+              <p className="small-text">{e.text}</p>
+            </div>
+          </div>
+        ))}
+      </Section>
+
+      {/* ---------------- Funding ---------------- */}
+      <Section id="funding" title="Funding" note="funded and under review">
+        {FUNDING.map((f) => (
+          <div className="row" key={f.title}>
+            <div className="range">{f.years}</div>
+            <div>
+              <h3 className="row-h">{f.title} <span className={"badge " + BADGE[f.status]}>{f.status}</span></h3>
+              <p className="small-text">{f.sponsor} · {f.amount}</p>
+              <p className="role">{f.role}</p>
+            </div>
+          </div>
+        ))}
+      </Section>
+
+      {/* ---------------- Publications ---------------- */}
+      <Section id="publications" title="Publications" note="● first-authored">
+        <div className="tabs" role="group" aria-label="Filter publications">
           {["All", "Journal", "Conference", "Book"].map((t) => (
-            <button
-              key={t}
-              role="tab"
-              aria-selected={filter === t}
-              className={"tab" + (filter === t ? " on" : "")}
-              onClick={() => { setFilter(t); setShowAllPubs(false); }}
-            >
+            <button key={t} className={"tab" + (pubType === t ? " on" : "")} onClick={() => { setPubType(t); setAllPubs(false); }}>
               {t}
             </button>
           ))}
+          <button className={"tab" + (firstOnly ? " on" : "")} onClick={() => { setFirstOnly(!firstOnly); setAllPubs(false); }}>
+            First-authored only
+          </button>
         </div>
-        <div className="pubs">
-          {pubs.map((p, i) => (
-            <article className="pub" key={p.title + i}>
-              <span className="yr">{p.year}</span>
-              <div>
-                <h3>{p.title}</h3>
-                <p className="meta">{p.authors} — <em>{p.venue}</em></p>
-                {p.link && <a className="doi" href={p.link} target="_blank" rel="noreferrer">{p.linkLabel}</a>}
-              </div>
-              <Badge status={p.status} />
-            </article>
-          ))}
-        </div>
-        {filtered.length > 8 && (
-          <button className="more" onClick={() => setShowAllPubs(!showAllPubs)}>
-            {showAllPubs ? "Show fewer" : `Show all ${filtered.length}`}
+        {shownPubs.map((p, i) => (
+          <div className="pub" key={i}>
+            <span className="yr">{p.year}</span>
+            <div>
+              <h3>{p.first && <span className="first" title="First-authored">● </span>}{p.title}</h3>
+              <p className="meta">{p.authors} · <i>{p.venue}</i></p>
+              <Ext className="doi" href={p.link}>{p.link.replace("https://", "")}</Ext>
+            </div>
+            <span className={"badge " + BADGE[p.status]}>{p.status}</span>
+          </div>
+        ))}
+        {pubs.length > 8 && (
+          <button className="more" onClick={() => setAllPubs(!allPubs)}>
+            {allPubs ? "Show fewer" : `Show all ${pubs.length}`}
           </button>
         )}
-      </section>
+      </Section>
 
-      {/* ---------- Experience ---------- */}
-      <section className="sec" aria-labelledby="experience">
-        <SectionHead id="experience" title="Experience" note="selected research roles" />
-        <div className="timeline">
-          {EXPERIENCE.map((x, i) => (
-            <article className="xp" key={i}>
-              <span className="range">{x.range}</span>
-              <div>
-                <h3>{x.org}</h3>
-                <p className="role">{x.role}</p>
-                <ul>{x.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul>
-                {x.funding && <p className="funding">{x.funding}</p>}
-              </div>
-            </article>
-          ))}
+      {/* ---------------- Talks ---------------- */}
+      <Section id="talks" title="Talks and panels">
+        {TALKS.map((t) => (
+          <div className="row" key={t.title}>
+            <div className="range">{t.year}</div>
+            <div>
+              <h3 className="row-h">{t.title}</h3>
+              <p className="small-text">{t.kind} · {t.venue} <Ext className="inline-link" href={t.link}>link</Ext></p>
+            </div>
+          </div>
+        ))}
+      </Section>
+
+      {/* ---------------- Teaching and mentoring ---------------- */}
+      <Section id="teaching" title="Teaching and mentoring">
+        {TEACHING.map((t) => (
+          <div className="row" key={t.title}>
+            <div className="range">{t.range}</div>
+            <div>
+              <h3 className="row-h">{t.title}</h3>
+              <p className="role">{t.org}</p>
+              <p className="small-text">{t.detail}</p>
+            </div>
+          </div>
+        ))}
+
+        <div className="courses">
+          <div>
+            <h3 className="sub-h">Ready to teach (undergraduate)</h3>
+            <ul>{COURSES.undergrad.map((c) => <li key={c}>{c}</li>)}</ul>
+          </div>
+          <div>
+            <h3 className="sub-h">Ready to teach (graduate)</h3>
+            <ul>{COURSES.grad.map((c) => <li key={c}>{c}</li>)}</ul>
+          </div>
         </div>
-      </section>
 
-      {/* ---------- Humanitarian roots ---------- */}
-      <section className="sec roots" aria-labelledby="roots">
-        <SectionHead id="roots" title="Humanitarian roots" note="before the sensors, there were floods and earthquakes" />
-        <div className="cards three">
-          {HUMANITARIAN.map((h, i) => (
-            <article className="card" key={i}>
-              <p className="tag">{h.range}</p>
-              <h3>{h.title}</h3>
-              <p className="role">{h.role}</p>
-              <p>{h.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- News ---------- */}
-      <section className="sec" aria-labelledby="news">
-        <SectionHead id="news" title="News" note="edit NEWS in data.js" />
-        <div className="cards two">
-          {NEWS.map((n, i) => (
-            <article className={"card news" + (n.placeholder ? " ph" : "")} key={i}>
-              <div className="news-img">
-                {n.image ? <img src={n.image} alt="" /> : <span>Add image</span>}
-              </div>
-              <p className="tag">{fmtDate(n.date)}</p>
-              <h3>{n.title}</h3>
-              <p>{n.desc}</p>
-              {n.link && (
-                <a className="more-link" href={n.link} target="_blank" rel="noreferrer">
-                  {n.linkLabel || "Read more"} →
-                </a>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- Teaching and mentorship ---------- */}
-      <section className="sec" aria-labelledby="teaching">
-        <SectionHead id="teaching" title="Teaching and mentorship" />
-        <div className="rows">
-          {TEACHING.map((t, i) => (
-            <div className="row" key={i}>
-              <span className="range">{t.range}</span>
-              <div>
-                <h3>{t.title}</h3>
-                <p className="role">{t.org}</p>
-                <p className="small-text">{t.detail}</p>
-              </div>
+        <h3 className="sub-h">Students I mentor and have mentored</h3>
+        <div className="cards two mentees">
+          {MENTORSHIP.map((m) => (
+            <div className="card slim" key={m.name}>
+              <h3>{m.name}<span className="lvl">{m.level}</span></h3>
+              <p className="range-s">{m.range}</p>
+              <p>{m.note}</p>
             </div>
           ))}
         </div>
-        <div className="cards two mentees">
-          {mentees.map((mm, i) => (
-            <article className="card slim" key={i}>
-              <h3>{mm.name} <span className="lvl">{mm.level}</span></h3>
-              <p className="range-s">{mm.range}</p>
-              <p className="small-text">{mm.note}</p>
-            </article>
-          ))}
-        </div>
-        {MENTORSHIP.length > 4 && (
-          <button className="more" onClick={() => setShowAllMentees(!showAllMentees)}>
-            {showAllMentees ? "Show fewer" : `Show all ${MENTORSHIP.length} mentees`}
-          </button>
-        )}
-      </section>
+      </Section>
 
-      {/* ---------- Projects ---------- */}
-      <section className="sec" aria-labelledby="projects">
-        <SectionHead id="projects" title="Projects and code" note="repo links pending" />
-        <div className="cards two">
-          {PROJECTS.map((p, i) => (
-            <article className="card" key={i}>
-              <p className="tag">{p.tag}</p>
-              <h3>{p.title}</h3>
-              <p>{p.desc}</p>
-              <a className="more-link" href={p.href} title="Replace with the real GitHub repo link">github.com/your-username/repo →</a>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- Personal ---------- */}
-      <section className="sec" aria-labelledby="personal">
-        <SectionHead id="personal" title="Beyond the lab" note="edit PERSONAL_INTRO and PERSONAL_PHOTOS in data.js" />
-        <p className="personal-intro">{PERSONAL_INTRO}</p>
-        <div className="photos">
-          {PERSONAL_PHOTOS.map((p, i) => (
-            <figure key={i}>
-              <div className="photo-box">
-                {p.src ? <img src={p.src} alt={p.caption} /> : <span>Add photo</span>}
-              </div>
-              <figcaption>{p.caption}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- Education, awards, service ---------- */}
-      <section className="sec">
+      {/* ---------------- Service, leadership, honors ---------------- */}
+      <Section id="service" title="Service, leadership, and honors">
         <div className="trio">
           <div>
-            <h3>Education</h3>
+            <h3>Service to the field</h3>
+            <ul>{SERVICE.map((s) => <li key={s}>{s}</li>)}</ul>
+          </div>
+          <div>
+            <h3>Community leadership</h3>
             <ul className="plain">
-              {EDUCATION.map((e, i) => (
-                <li key={i}>
-                  <strong>{e.degree}</strong>
-                  <span>{e.org} · {e.year}</span>
+              {HUMANITARIAN.map((h) => (
+                <li key={h.title}>
+                  <strong>{h.title} · {h.range}</strong>
+                  <span>{h.role}</span>
+                  <span>{h.text}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h3>Awards and honors</h3>
-            <ul>{AWARDS.map((a, i) => <li key={i}>{a}</li>)}</ul>
+            <h3>Honors</h3>
+            <ul>{AWARDS.map((a) => <li key={a}>{a}</li>)}</ul>
+          </div>
+        </div>
+      </Section>
+
+      {/* ---------------- Media and code ---------------- */}
+      <Section id="media" title="In the media and code">
+        <div className="courses">
+          <div>
+            <ul className="plain-list">
+              {MEDIA.map((m) => (
+                <li key={m.title}>
+                  <a href={m.link} target="_blank" rel="noreferrer">{m.title}</a>
+                  <span>{m.outlet}, {m.year}</span>
+                </li>
+              ))}
+            </ul>
           </div>
           <div>
-            <h3>Service</h3>
-            <ul>{SERVICE.map((s, i) => <li key={i}>{s}</li>)}</ul>
+            <ul className="plain-list">
+              {PROJECTS.map((p) => (
+                <li key={p.title}>
+                  {p.href ? <a href={p.href} target="_blank" rel="noreferrer">{p.title}</a> : <b>{p.title}</b>}
+                  <span>{p.tag}. {p.desc}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      {/* ---------------- Mottos ---------------- */}
+      <section className="sec mottos" aria-label="Mottos">
+        <p className="motto-1">
+          {MOTTOS.first.before} <span className="big">{MOTTOS.first.big}</span> {MOTTOS.first.mid}{" "}
+          <span className="small">{MOTTOS.first.small}</span>{MOTTOS.first.after}
+        </p>
+        <div className="motto-row">
+          <div className="motto-2"><p>{MOTTOS.second}</p></div>
+          <div>
+            <p className="fa" lang="fa" dir="rtl">{MOTTOS.verse.fa}</p>
+            <p className="translit">{MOTTOS.verse.translit}</p>
+            <p className="trans">{MOTTOS.verse.en}</p>
           </div>
         </div>
       </section>
 
-      <footer className="foot" id="contact">
-        <div className="foot-in">
-          <p className="foot-motto">This too shall pass.</p>
-          <a className="foot-mail" href="mailto:seyedrez@usc.edu">seyedrez@usc.edu</a>
-          <div className="foot-links">
-            <a href={SCHOLAR} target="_blank" rel="noreferrer">Google Scholar</a>
-            <a href={ORCID} target="_blank" rel="noreferrer">ORCID</a>
-            <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="#" title="Add your GitHub URL">GitHub</a>
+      {hasPersonal && (
+        <Section id="personal" title="Beyond the lab">
+          {PERSONAL_INTRO && <p className="personal-intro">{PERSONAL_INTRO}</p>}
+          <div className="photos">
+            {PERSONAL_PHOTOS.filter((p) => p.src).map((p, i) => (
+              <figure key={i}>
+                <div className="photo-box"><img src={p.src} alt={p.caption} /></div>
+                <figcaption>{p.caption}</figcaption>
+              </figure>
+            ))}
           </div>
-          <p className="copy">© 2026 Mirmahdi Seyedrezaei</p>
+        </Section>
+      )}
+
+      {/* ---------------- Footer ---------------- */}
+      <footer className="foot" id="contact">
+        <Habitat />
+        <div className="foot-in">
+          <p className="foot-motto">Let's talk about people and buildings.</p>
+          <a className="foot-mail" href={"mailto:" + PROFILE.email}>{PROFILE.email}</a>
+          <div className="foot-links">
+            {PROFILE.links.map((l) => <a key={l.label} href={l.href} target="_blank" rel="noreferrer">{l.label}</a>)}
+            <a href={PROFILE.cv} target="_blank" rel="noreferrer">CV</a>
+          </div>
+          <p className="copy">© {new Date().getFullYear()} {PROFILE.name}</p>
         </div>
       </footer>
     </div>
