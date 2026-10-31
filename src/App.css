@@ -200,6 +200,11 @@ button { cursor: pointer; }
 .field:nth-child(3n+2) { border-top-color: var(--turq); }
 .field:nth-child(3n) { border-top-color: var(--sun); }
 
+/* At a glance */
+.stats { max-width: 1020px; margin: 36px auto 0; padding: 0 28px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.stat-box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+.stat-box b { font-family: 'Young Serif', serif; font-weight: 400; font-size: 26px; color: var(--lapis); line-height: 1.1; }
+.stat-box span { font-size: 12.5px; color: var(--ink-2); line-height: 1.35; }
 
 /* Research vision */
 .vision-intro { max-width: 70ch; font-size: 16.5px; color: var(--ink-2); margin-bottom: 24px !important; }
@@ -240,10 +245,12 @@ button { cursor: pointer; }
 
 @media (max-width: 980px) {
   .fields { grid-template-columns: repeat(3, 1fr); row-gap: 18px; }
+  .stats { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 860px) {
   .thrusts, .courses { grid-template-columns: 1fr; }
   .fields { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
+  .stats { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
   .hero-line { max-width: none; }
 }
 .site section[id], .site header[id] { scroll-margin-top: 72px; }
@@ -254,25 +261,3 @@ button { cursor: pointer; }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a { white-space: nowrap; }
 }
-
-/* ---------- Hero note ---------- */
-.hero-note { margin-top: 14px !important; max-width: 60ch; font-size: 14px; color: var(--slate); font-style: italic; }
-
-/* ---------- Footer habitat ---------- */
-.foot { position: relative; overflow: hidden; padding-top: 0 !important; }
-.habitat { display: block; width: 100%; height: 200px; margin-bottom: 28px; }
-.habitat .star { fill: #F3D9A6; opacity: 0.8; }
-.habitat .s1 { animation: twinkle 4s ease-in-out infinite; }
-.habitat .s2 { animation: twinkle 5.5s ease-in-out infinite 1s; }
-.habitat .s3 { animation: twinkle 3.2s ease-in-out infinite 2s; }
-.habitat .ground { fill: #141B38; }
-.habitat .horizon { fill: none; stroke: rgba(27, 127, 134, 0.6); stroke-width: 1.2; }
-.habitat .dome { fill: #1F2B57; stroke: #8FA6D8; stroke-width: 1.2; }
-.habitat .rib { fill: none; stroke: rgba(143, 166, 216, 0.6); stroke-width: 1; }
-.habitat .win { fill: #E7A12B; opacity: 0.9; }
-.habitat .w2 { animation: twinkle 7s ease-in-out infinite; }
-.habitat .node { fill: #4FC3C9; }
-.habitat .node-ring { fill: none; stroke: #4FC3C9; stroke-width: 1; opacity: 0; animation: ping 3s ease-out infinite; transform-origin: 104px -31px; transform-box: view-box; }
-@keyframes twinkle { 0%, 100% { opacity: 0.85; } 50% { opacity: 0.25; } }
-@keyframes ping { 0% { opacity: 0.8; transform: scale(0.4); } 100% { opacity: 0; transform: scale(1.6); } }
-@media (prefers-reduced-motion: reduce) { .habitat * { animation: none !important; } }
