@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import LivingBackground from "./LivingBackground";
 import {
   PROFILE, PROFILE_PHOTO, PROFILE_ALT, HERO, FIELDS, VISION, MOTTOS,
   NEWS, NEWS_SHOWN, PERSONAL_INTRO, PERSONAL_PHOTOS, RESEARCH, EARLIER, FUNDING,
@@ -139,7 +138,6 @@ export default function App() {
         <div className="rail-track"><div className="rail-sun" /></div>
         <div className="rail-read" ref={readRef} />
       </div>
-      <LivingBackground />
 
       <nav className="nav" aria-label="Main">
         <a className="nav-mark" href="#top">{PROFILE.name}</a>

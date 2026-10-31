@@ -255,15 +255,8 @@ button { cursor: pointer; }
   .nav-links a { white-space: nowrap; }
 }
 
-/* ---------- Living background ---------- */
-.living-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-.site > header, .site > section, .site > footer, .site > .fields { position: relative; z-index: 1; }
-.nav { z-index: 20 !important; }
-.rail { z-index: 6 !important; }
+/* ---------- Hero note ---------- */
 .hero-note { margin-top: 14px !important; max-width: 60ch; font-size: 14px; color: var(--slate); font-style: italic; }
-.field { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(2px); border-radius: 0 0 8px 8px; padding: 10px 8px 10px !important; }
-.sec-head { background: transparent; }
-.xp, .row, .pub { backdrop-filter: blur(1.5px); }
 
 /* ---------- Footer habitat ---------- */
 .foot { position: relative; overflow: hidden; padding-top: 0 !important; }
