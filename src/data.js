@@ -117,10 +117,10 @@ export const NEWS = [
 ];
 
 export const PERSONAL_PHOTOS = [
-  { src: "./images/personal/palos-verdes.jpeg", caption: "Pacific Coast, Palos Verdes, California" },
-  { src: "./images/personal/glacier.jpeg", caption: "Glacier National Park, Montana" },
-  { src: "./images/personal/san-juan.jpeg", caption: "San Juan, Puerto Rico" },
-  { src: "./images/personal/chicago.jpeg", caption: "Chicago, Illinois" },
+  { src: "./images/palos-verdes.jpeg", caption: "Pacific Coast, Palos Verdes, California" },
+  { src: "./images/glacier.jpeg", caption: "Glacier National Park, Montana" },
+  { src: "./images/san-juan.jpeg", caption: "San Juan, Puerto Rico" },
+  { src: "./images/chicago.jpeg", caption: "Chicago, Illinois" },
 ];
 
 export const PERSONAL_INTRO =
