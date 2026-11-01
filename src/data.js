@@ -16,7 +16,7 @@ export const INTERESTS = [
   "Multimodal sensing and human-state modeling",
   "Person-centered digital twins and transferable occupant models",
   "Human-AI negotiation in physically adaptive spaces",
-  "Habitability as life support, from homes to space habitats",
+  "Habitability as life support",
   "Energy affordability, demand flexibility, and equity in housing",
 ];
 
