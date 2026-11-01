@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import {
-  PROFILE_PHOTO, PROFILE_ALT, MOTTOS, HUMANITARIAN, NEWS, PERSONAL_PHOTOS, PERSONAL_INTRO,
+  PROFILE_PHOTO, PROFILE_ALT, MOTTOS, INTERESTS, HUMANITARIAN, NEWS, PERSONAL_PHOTOS, PERSONAL_INTRO,
   PUBLICATIONS, EDUCATION, EXPERIENCE, TEACHING, MENTORSHIP, AWARDS, SERVICE, PROJECTS,
 } from "./data.js";
 
@@ -111,9 +111,9 @@ export default function App() {
           <h1>Buildings that listen to the people inside them.</h1>
           <p className="lede">
             I’m Mirmahdi Seyedrezaei. I study how built environments shape health, safety, and well-being, using
-            human-centered AI, multimodal physiological and environmental sensing, and longitudinal machine-learning
-            methods. The goal is rigorous, deployable work that makes homes, offices, and housing for those who can least
-            afford a bad building adapt to the people in them.
+            multimodal sensing, human-state modeling, and longitudinal machine learning. The goal is rigorous,
+            deployable work that helps homes, offices, and affordable housing adapt to the people in them, especially
+            those who can least afford a bad building.
           </p>
           <div className="cta-row">
             <a className="btn solid" href={CV} target="_blank" rel="noreferrer">Download CV</a>
@@ -141,49 +141,42 @@ export default function App() {
           </div>
           <div className="sill" />
           </div>
-          <figcaption>The light crossing this window follows you down the page.</figcaption>
         </figure>
       </header>
 
       {/* ---------- Mottos ---------- */}
       <section className="sec mottos" aria-labelledby="mottos">
-        <SectionHead id="mottos" title="Three lines I keep" />
+        <SectionHead id="mottos" title="Two lines I keep" />
         <p className="motto-1">
           {m.first.before} <span className="big">{m.first.big}</span> {m.first.mid}{" "}
           <span className="small">{m.first.small}</span>
           {m.first.after}
         </p>
         <div className="motto-row">
-          <div className="motto-2">
-            <p>{m.second}</p>
-            <span className="cap">The light on this page moves as you scroll.</span>
-          </div>
-          <div className="motto-3">
-            <p className="fa" lang="fa" dir="rtl">{m.verse.fa}</p>
-            <p className="translit">{m.verse.translit}</p>
-            <p className="trans">{m.verse.en}</p>
-            <span className="cap">A line of Persian verse</span>
-          </div>
+          <p className="motto-2">{m.second}</p>
         </div>
       </section>
 
       {/* ---------- Research ---------- */}
       <section className="sec" aria-labelledby="research">
         <SectionHead id="research" title="Research" note="three threads, one question: who is the building for?" />
+        <ul className="chips" aria-label="Research interests">
+          {INTERESTS.map((t) => <li key={t}>{t}</li>)}
+        </ul>
         <div className="cards three">
           <article className="card">
             <p className="tag">Human-centered AI and sensing</p>
             <h3>Well-being in hybrid work</h3>
             <p>Longitudinal, multimodal studies linking air quality, temperature, and lighting to workload, mood, stress, and performance at home and in the office.</p>
             <p className="for">For workers whose home air we almost never measure.</p>
-            <p className="stat">5 cohorts · 60 participants · 109 workspaces</p>
+            <p className="stat">5 cohorts · 50 office workers</p>
           </article>
           <article className="card">
             <p className="tag">Energy equity</p>
             <h3>Affordable housing and energy burden</h3>
             <p>Behavioral, financial, and circuit-level analyses of energy use in low-income housing, informing how solar benefits and demand response reach residents.</p>
             <p className="for">For residents who pay the bill and had no say in the design.</p>
-            <p className="stat">$8M CEC project · 107 units monitored</p>
+            <p className="stat">$8M CEC consortium project · 107 units monitored</p>
           </article>
           <article className="card">
             <p className="tag">Equity framework</p>
@@ -197,7 +190,7 @@ export default function App() {
 
       {/* ---------- Publications ---------- */}
       <section className="sec" aria-labelledby="publications">
-        <SectionHead id="publications" title="Publications" note={`${PUBLICATIONS.length} total`} />
+        <SectionHead id="publications" title="Publications" />
         <div className="tabs" role="tablist" aria-label="Filter publications">
           {["All", "Journal", "Conference", "Book"].map((t) => (
             <button
@@ -251,8 +244,8 @@ export default function App() {
 
       {/* ---------- Humanitarian roots ---------- */}
       <section className="sec roots" aria-labelledby="roots">
-        <SectionHead id="roots" title="Humanitarian roots" note="before the sensors, there were floods and earthquakes" />
-        <div className="cards three">
+        <SectionHead id="roots" title="Humanitarian roots" />
+        <div className="cards two">
           {HUMANITARIAN.map((h, i) => (
             <article className="card" key={i}>
               <p className="tag">{h.range}</p>
@@ -266,14 +259,16 @@ export default function App() {
 
       {/* ---------- News ---------- */}
       <section className="sec" aria-labelledby="news">
-        <SectionHead id="news" title="News" note="edit NEWS in data.js" />
+        <SectionHead id="news" title="News" />
         <div className="cards two">
           {NEWS.map((n, i) => (
             <article className={"card news" + (n.placeholder ? " ph" : "")} key={i}>
-              <div className="news-img">
-                {n.image ? <img src={n.image} alt="" /> : <span>Add image</span>}
-              </div>
-              <p className="tag">{fmtDate(n.date)}</p>
+              {(n.image || n.placeholder) && (
+                <div className="news-img">
+                  {n.image ? <img src={n.image} alt="" /> : <span>Add image</span>}
+                </div>
+              )}
+              <p className="tag">{n.dateLabel || fmtDate(n.date)}</p>
               <h3>{n.title}</h3>
               <p>{n.desc}</p>
               {n.link && (
@@ -319,14 +314,18 @@ export default function App() {
 
       {/* ---------- Projects ---------- */}
       <section className="sec" aria-labelledby="projects">
-        <SectionHead id="projects" title="Projects and code" note="repo links pending" />
-        <div className="cards two">
+        <SectionHead id="projects" title="Projects and code" />
+        <div className="cards three">
           {PROJECTS.map((p, i) => (
             <article className="card" key={i}>
               <p className="tag">{p.tag}</p>
               <h3>{p.title}</h3>
               <p>{p.desc}</p>
-              <a className="more-link" href={p.href} title="Replace with the real GitHub repo link">github.com/your-username/repo →</a>
+              {p.href ? (
+                <a className="more-link" href={p.href} target="_blank" rel="noreferrer">View on GitHub →</a>
+              ) : (
+                <span className="soon">Coming soon</span>
+              )}
             </article>
           ))}
         </div>
@@ -334,7 +333,7 @@ export default function App() {
 
       {/* ---------- Personal ---------- */}
       <section className="sec" aria-labelledby="personal">
-        <SectionHead id="personal" title="Beyond the lab" note="edit PERSONAL_INTRO and PERSONAL_PHOTOS in data.js" />
+        <SectionHead id="personal" title="Beyond the lab" />
         <p className="personal-intro">{PERSONAL_INTRO}</p>
         <div className="photos">
           {PERSONAL_PHOTOS.map((p, i) => (
@@ -358,6 +357,7 @@ export default function App() {
                 <li key={i}>
                   <strong>{e.degree}</strong>
                   <span>{e.org} · {e.year}</span>
+                  {e.thesis && <span className="thesis">{e.thesis}</span>}
                 </li>
               ))}
             </ul>

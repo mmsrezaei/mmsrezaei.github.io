@@ -4,84 +4,121 @@
    Images/files go in the /public folder and are referenced as "./images/..."
    ===================================================================== */
 
-// Your profile photo. Put the file at public/images/profile.jpg, then set:
-//   export const PROFILE_PHOTO = "./images/profile.jpg";
-export const PROFILE_PHOTO = null;
+// Your profile photo: the file lives at public/images/profile.jpeg
+export const PROFILE_PHOTO = "./images/profile.jpeg";
 export const PROFILE_ALT = "Portrait of Mirmahdi Seyedrezaei";
 
 export const MOTTOS = {
   first: { before: "We are", big: "bigger", mid: "than our", small: "problems", after: "." },
   second: "This too shall pass.",
-  verse: {
-    fa: "دائم یکسان نباشد حال دوران، غم مخور",
-    translit: "Dā’em yeksān nabāshad hāl-e dowrān, gham makhor",
-    en: "The state of the world never stays the same. Do not grieve.",
-  },
 };
 
-// Humanitarian roots — drawn from the CV (volunteer, service, and resilience work).
+export const INTERESTS = [
+  "Occupant health, comfort, and well-being in buildings",
+  "Multimodal sensing and human-state modeling",
+  "Person-centered digital twins and transferable occupant models",
+  "Human-AI negotiation in physically adaptive spaces",
+  "Habitability as life support, from homes to space habitats",
+  "Energy affordability, demand flexibility, and equity in housing",
+];
+
+// Humanitarian roots, drawn from the CV (volunteer leadership and service).
 export const HUMANITARIAN = [
   {
     range: "2014–2022",
     title: "SOSA Poverty",
-    role: "Social-environmental activist and volunteer; voluntary leadership (2017–2021)",
-    text: "Built and led multidisciplinary volunteer teams in humanitarian response, knowledge management, and educational planning for an international NGO with general consultative status at the UN ECOSOC.",
+    role: "Social-environmental activist and volunteer leader",
+    text: "Built and led multidisciplinary volunteer teams (2017–2021) supporting humanitarian response, knowledge management, project documentation, and educational planning for an international NGO with general consultative status at the UN ECOSOC.",
   },
   {
     range: "2019",
     title: "Iran nationwide floods",
-    role: "Response team organizer; conference executive manager; editor",
-    text: "Organized the NGO's response teams, ran the Iran Nationwide Flood Conference at Sharif University, contributed to the national flood report (proposing “Green Relief” for post-disaster activities), and edited the proceedings.",
-  },
-  {
-    range: "2021–2022",
-    title: "Tabriz Historic Bazaar",
-    role: "Research assistant, seismic resilience assessment",
-    text: "Assessed the resilience of a UNESCO World Heritage site across cultural, physical, socioeconomic, and organizational dimensions: 5 dimensions, 17 indicators, 50 sub-indicators, with GIS mapping of vulnerability.",
+    role: "Conference chair and executive manager; response team organizer",
+    text: "Organized volunteer response teams and field assessments with affected communities, chaired a two-day, nine-session conference with 25+ speakers at Sharif University of Technology, proposed “Green Relief” in the national flood report, and edited the proceedings (Lohe Fekr, 2024).",
   },
 ];
 
+/* NEWS: newest first. Each item can have:
+   date       "YYYY-MM-DD" (shown as e.g. Mar 12, 2025)
+   dateLabel  optional text shown INSTEAD of date, e.g. "2026" or "Fall 2025"
+   image      e.g. "./images/news/my-photo.jpg" (file goes in public/images/news)
+   placeholder: true  shows a dashed "template" card; delete it when you don't need it */
 export const NEWS = [
   {
-    date: "2025-09-15",
-    title: "Nature feature on a SHINE mentoring connection",
-    desc: "A high-school mentee I supervised in USC's SHINE program co-authored a Nature piece on how the mentorship shaped her path into science.",
-    link: "https://www.nature.com/articles/d41586-025-02706-4",
-    linkLabel: "Read on Nature",
+    date: "",
+    dateLabel: "2026",
+    title: "NIOSH-supported pilot grant funded",
+    desc: "My proposal on work-pattern boundedness and occupational stress was funded through the SCERC Pilot Project Research Training Program, supported by NIOSH ($10,000, 2026–2027). I serve as Principal Investigator.",
+    link: "",
+    linkLabel: "",
     image: null,
     placeholder: false,
   },
   {
-    date: "2024-11-01",
-    title: "Palm City Transit Village presented at GreenBuild",
-    desc: "Represented the USC research team on a panel with National CORE, Arup, and Studio E Architects discussing a 288-unit all-electric affordable housing development.",
+    date: "",
+    dateLabel: "2025",
+    title: "Named Outstanding Research Assistant of the Year",
+    desc: "Recognized by the USC Sonny Astani Department of Civil and Environmental Engineering.",
+    link: "",
+    linkLabel: "",
+    image: null,
+    placeholder: false,
+  },
+  {
+    date: "",
+    dateLabel: "2025",
+    title: "Recognized as a Top Peer Reviewer by ASCE OPEN",
+    desc: "Named a Top Peer Reviewer for ASCE OPEN: Multidisciplinary Journal of Civil Engineering.",
+    link: "",
+    linkLabel: "",
+    image: null,
+    placeholder: false,
+  },
+  {
+    date: "2025-09-01",
+    dateLabel: "",
+    title: "NSF M3X award funded: Embodied Intelligence in Smart Workspaces",
+    desc: "A $540,000 NSF award (CMMI, M3X program, 2025–2028) led by Prof. Burçin Becerik-Gerber with Prof. Gale Lucas and Prof. Yasser Khan as co-PIs. I contributed to the methodology and proposal, drawing on our NSF-funded longitudinal hybrid-work study.",
+    link: "https://www.nsf.gov/awardsearch/showAward?AWD_ID=2533498",
+    linkLabel: "View the NSF award",
+    image: null,
+    placeholder: false,
+  },
+  {
+    date: "2025-03-12",
+    dateLabel: "",
+    title: "Selected as an NSF CPS Rising Star",
+    desc: "One of 30 Ph.D. students and postdocs chosen nationwide from 170+ applicants for the 2025 CPS Rising Stars Workshop at Vanderbilt University, where I presented a poster on personalized cyber-physical systems for health and well-being.",
+    link: "https://cps-vo.org/group/CPSRisingStarsWorkshop25",
+    linkLabel: "See the workshop",
+    image: null,
+    placeholder: false,
+  },
+  {
+    date: "2024-11-15",
+    dateLabel: "",
+    title: "Palm City Transit Village presented at Greenbuild 2024",
+    desc: "Represented the USC research team on a panel with National CORE, Arup, and Studio E Architects about a 288-unit all-electric affordable housing development with a solar-and-storage microgrid.",
     link: "https://streamly.video/video/palm-city-transit-village-reimagining-affordable-housing-s-carbon-constrained-future",
     linkLabel: "Watch the session",
     image: null,
     placeholder: false,
   },
   {
-    date: "2023-03-01",
-    title: "USC Viterbi feature on workplace stress research",
-    desc: "Coverage of the NSF Smart and Connected Health-funded project using sensing and AI to understand and mitigate job stress.",
-    link: "https://viterbischool.usc.edu/news/2023/03/stressed-at-work-usc-researchers-aim-to-change-that/",
-    linkLabel: "Read the feature",
+    date: "2024-03-04",
+    dateLabel: "",
+    title: "CEC EPIC Phase II funded",
+    desc: "The California Energy Commission funded Phase II of the EPIC affordable-housing project, an $8M consortium award led by National CORE (2023–2027). I lead USC's research on resident engagement, energy-use monitoring, and household energy affordability and demand flexibility.",
+    link: "https://nationalcore.org/national-core-partners-to-pioneer-next-generation-of-sustainable-affordable-housing-with-8-million-state-grant/",
+    linkLabel: "Read the announcement",
     image: null,
     placeholder: false,
   },
   {
     date: "",
+    dateLabel: "",
     title: "Add a news item",
-    desc: "Short description of the update — a talk, award, new paper, or media mention. Replace this placeholder in the NEWS array in data.js.",
-    link: "",
-    linkLabel: "",
-    image: null,
-    placeholder: true,
-  },
-  {
-    date: "",
-    title: "Add a news item",
-    desc: "Another open slot. Duplicate this object in the NEWS array and fill in date, title, desc, link, and image as needed (images go in public/images/news).",
+    desc: "Short description of the update: a talk, award, new paper, or media mention. Copy this block in the NEWS array in data.js and fill in the fields, or delete it.",
     link: "",
     linkLabel: "",
     image: null,
@@ -97,7 +134,7 @@ export const PERSONAL_PHOTOS = [
 ];
 
 export const PERSONAL_INTRO =
-  "Outside the lab: replace this paragraph with a few sentences about your life outside research — hobbies, travel, family, whatever you want to share. This section is entirely yours to edit in the PERSONAL_INTRO constant.";
+  "Away from the lab, I spend my time with my partner and our kittens. We bike along the Pacific Coast, hike, chase sunsets, and take road trips. I also love to travel, visit attractions, and unwind with a good TV show or movie.";
 
 /* ===================================================================== */
 
@@ -109,7 +146,7 @@ export const PUBLICATIONS = [
   { type: "Journal", status: "Published", year: 2025, authors: "Seyedrezaei, Becerik-Gerber, Kohut", title: "Exploring energy consumption in energy-efficient, affordable housing in Southern California: behavioral insights and financial implications", venue: "Energy and Buildings, 331, 115369", link: "https://doi.org/10.1016/j.enbuild.2025.115369", linkLabel: "doi.org/10.1016/j.enbuild.2025.115369" },
   { type: "Journal", status: "Published", year: 2024, authors: "Seyedrezaei, Tak, Becerik-Gerber", title: "Consumption and conservation behaviors among affordable housing residents in Southern California", venue: "Energy and Buildings, 304, 113840", link: "https://doi.org/10.1016/j.enbuild.2023.113840", linkLabel: "doi.org/10.1016/j.enbuild.2023.113840" },
   { type: "Journal", status: "Published", year: 2023, authors: "Seyedrezaei, Becerik-Gerber, Awada, Contreras, Boeing", title: "Equity in the built environment: a systematic review", venue: "Building and Environment, 245, 110827", link: "https://doi.org/10.1016/j.buildenv.2023.110827", linkLabel: "doi.org/10.1016/j.buildenv.2023.110827" },
-  { type: "Journal", status: "Published", year: 2023, authors: "Seyedrezaei, Awada, Becerik-Gerber, Lucas, Roll", title: "Interaction effects of indoor environmental quality factors on cognitive performance and perceived comfort of young adults in open-plan offices in a North American Mediterranean climate", venue: "Building and Environment, 244, 110743", link: "https://doi.org/10.1016/j.buildenv.2023.110743", linkLabel: "doi.org/10.1016/j.buildenv.2023.110743" },
+  { type: "Journal", status: "Published", year: 2023, authors: "Seyedrezaei, Awada, Becerik-Gerber, Lucas, Roll", title: "Interaction effects of indoor environmental quality factors on cognitive performance and perceived comfort of young adults in open-plan offices in North American Mediterranean climate", venue: "Building and Environment, 244, 110743", link: "https://doi.org/10.1016/j.buildenv.2023.110743", linkLabel: "doi.org/10.1016/j.buildenv.2023.110743" },
   { type: "Journal", status: "Published", year: 2023, authors: "Awada, Becerik-Gerber, Liu, Seyedrezaei, et al.", title: "Ten questions concerning the impact of environmental stress on office workers", venue: "Building and Environment, 229, 109964", link: "https://doi.org/10.1016/j.buildenv.2022.109964", linkLabel: "doi.org/10.1016/j.buildenv.2022.109964" },
   { type: "Journal", status: "Published", year: 2023, authors: "Moaddab, Amini Hosseini, Seyedrezaei", title: "A holistic approach for evaluating system performance and earthquake resilience in historic-commercial urban fabrics", venue: "Natural Hazards, 116(1), 1261–1289", link: "https://doi.org/10.1007/s11069-022-05720-1", linkLabel: "doi.org/10.1007/s11069-022-05720-1" },
   { type: "Journal", status: "Published", year: 2022, authors: "Becerik-Gerber, Lucas, Aryal, Awada, et al.", title: "The field of human-building interaction for convergent research and innovation for intelligent built environments", venue: "Scientific Reports, 12, 22092", link: "https://doi.org/10.1038/s41598-022-25047-y", linkLabel: "doi.org/10.1038/s41598-022-25047-y" },
@@ -124,7 +161,7 @@ export const PUBLICATIONS = [
   { type: "Journal", status: "In prep", year: 2026, authors: "Seyedrezaei, Becerik-Gerber, Roll, Lucas, Narayanan", title: "Beyond the average occupant: sensory sensitivity as a moderator of IEQ exposure–well-being relationships", venue: "Manuscript in preparation", link: "", linkLabel: "" },
   { type: "Journal", status: "In prep", year: 2026, authors: "Seyedrezaei, Yang, Becerik-Gerber", title: "From circuit-level load monitoring to personalized energy education: a data-driven resident archetype framework for affordable housing", venue: "Manuscript in preparation", link: "", linkLabel: "" },
   // ---- Conference: Published ----
-  { type: "Conference", status: "Published", year: 2026, authors: "Seyedrezaei, Becerik-Gerber, Roll, Lucas, Narayanan", title: "Environmental comfort in hybrid work: a longitudinal preliminary field study of home and office workspaces", venue: "Proceedings of Indoor Air 2026, Singapore (presented by B. Becerik-Gerber)", link: "https://par.nsf.gov/biblio/10707203", linkLabel: "NSF PAR" },
+  { type: "Conference", status: "Published", year: 2026, authors: "Seyedrezaei, Becerik-Gerber, Lucas, Roll, Narayanan", title: "Environmental comfort in hybrid work: a longitudinal preliminary field study of home and office workspaces", venue: "Proceedings of Indoor Air 2026, Singapore (presented by B. Becerik-Gerber)", link: "https://par.nsf.gov/biblio/10707203", linkLabel: "NSF PAR" },
   { type: "Conference", status: "Published", year: 2026, authors: "Seyedrezaei, Reyes, Becerik-Gerber, Roll, Lucas, Narayanan", title: "Longitudinal analysis of IEQ variability in office and home workspaces: insights for the future of hybrid work", venue: "Computing in Civil Engineering 2025, pp. 1058–1067, ASCE", link: "https://doi.org/10.1061/9780784486436.113", linkLabel: "doi.org/10.1061/9780784486436.113" },
   { type: "Conference", status: "Published", year: 2025, authors: "Seyedrezaei, Becerik-Gerber", title: "Occupant satisfaction with building systems and thermostat usage in energy-efficient affordable housing in Southern California: preliminary findings", venue: "CIB Conferences, 1, Article 174", link: "https://doi.org/10.7771/3067-4883.1929", linkLabel: "doi.org/10.7771/3067-4883.1929" },
   { type: "Conference", status: "Published", year: 2025, authors: "Seyedrezaei, Becerik-Gerber, Roll, Lucas", title: "A preliminary investigation for understanding temperature's associations with office workers' psychological well-being: a close look into anxiety, motivation, and concentration", venue: "Computing in Civil Engineering 2024, pp. 568–572, ASCE", link: "https://doi.org/10.1061/9780784486139.061", linkLabel: "doi.org/10.1061/9780784486139.061" },
@@ -134,7 +171,7 @@ export const PUBLICATIONS = [
 ];
 
 export const EDUCATION = [
-  { degree: "Ph.D. in Civil Engineering", org: "University of Southern California", detail: "Advisor: Prof. Burçin Becerik-Gerber · iLAB", year: "Expected 2027" },
+  { degree: "Ph.D. in Civil Engineering", org: "University of Southern California", detail: "Advisor: Prof. Burçin Becerik-Gerber · iLAB", thesis: "Dissertation: Multidomain Analysis of Indoor Environmental Quality: Insights on Office Workers’ Stress, Mood, Productivity, Cognitive Functioning, and Comfort", year: "Expected 2027" },
   { degree: "M.S. in Computer Science", org: "University of Southern California", detail: "", year: "2026" },
   { degree: "M.S. in Sustainable Engineering", org: "University of Southern California", detail: "", year: "2025" },
   { degree: "M.S. in Civil Engineering (Earthquake Engineering)", org: "Sharif University of Technology, Tehran, Iran", detail: "Advisor: Prof. Kiarash Dolatshahi", year: "2018" },
@@ -144,11 +181,11 @@ export const EDUCATION = [
 export const EXPERIENCE = [
   {
     range: "2026–Present",
-    role: "Principal Investigator",
-    org: "Work Pattern Boundedness and Occupational Stress: A Pilot Study",
+    role: "Principal Investigator and Lead Researcher",
+    org: "Work Pattern Boundedness and Occupational Stress",
     bullets: [
-      "Independently authored the funded NIOSH-supported pilot proposal and lead study implementation, protocol, and EMA design",
-      "Designed a 14-day within-person study of 20 office workers using four wearable and environmental devices (Empatica EmbracePlus, Atmotube PRO 2, Casella dBadge2, LYS)",
+      "Independently conceived the research and authored the funded $10,000 NIOSH-supported pilot proposal as Principal Investigator; lead study implementation, protocol development, multimodal sensing, and EMA design",
+      "Designed a 14-day within-person study of 20 office workers, stratified by work-pattern boundedness, using four wearable and environmental devices (Empatica EmbracePlus, Atmotube PRO 2, Casella dBadge2, LYS)",
       "Built an EMA protocol targeting ~140 observations per participant, including momentary stress-source attribution",
     ],
     funding: "SCERC Pilot Project Research Training Program, NIOSH — $10,000 (2026–2027)",
@@ -158,9 +195,9 @@ export const EXPERIENCE = [
     role: "Co-Lead Researcher",
     org: "Longitudinal Study of Office Workers' Well-Being, Performance, and Comfort",
     bullets: [
-      "Co-leading a 5-cohort, 60-participant field study across 109 home and office workspaces (~10 GB of raw data per participant)",
-      "Developed a 7-method sensor quality-control framework and a multilevel analysis framework spanning 348 workload mediation models",
-      "Building and Environment (2026): higher workload in offices (|d| = 0.27–0.55) alongside higher performance for 83% of participants, mediated by CO₂, TVOCs, PM2.5, and humidity",
+      "Co-leading a five-cohort longitudinal field study of 50 office workers across their home and office workspaces (2–4 months per participant), combining IEQ sensors, audio badges, physiological wearables, EMA, and qualitative methods (~10 GB of raw data per participant)",
+      "Developed a context-aware, seven-method sensor quality-control framework and a multilevel analysis framework spanning 348 workload mediation models",
+      "Building and Environment (2026): higher mental, physical, and time demands in offices (|d| = 0.27–0.55) alongside higher performance for 83% of participants; indirect pathways linked work location to workload through CO₂, TVOCs, PM2.5, and humidity",
       "JOEM (2026): higher office productivity (|d| = 0.68) and lower at-home stress (|d| = 0.27); residential air quality flagged as an occupational health intervention target",
     ],
     funding: "NSF Smart and Connected Health program, Grant No. IIS-2204942",
@@ -173,9 +210,10 @@ export const EXPERIENCE = [
       "Mixed-methods research across four properties combining surveys, interviews, and a year of utility bills",
       "Energy and Buildings (2025): rooftop PV with CARE discounts and credits cut bills by up to 80%; CUAC estimates diverged from tariff-based charges by up to 217% at one property",
       "Energy and Buildings (2024): 38% of residents reported bill increases (avg. $81); payment-difficulty residents were less aware of thermostat savings features but more willing to adopt automation",
-      "Leading deployment of circuit-level NILM monitoring across 107 units to build household usage archetypes and an LLM-assisted energy education framework",
+      "Contributed resident evidence to the design of Palm City Transit Village, a 288-unit all-electric affordable housing development with a solar-and-storage microgrid, now under construction; presented the design study at Greenbuild 2024",
+      "Leading the current phase across multifamily, senior, and permanent supportive housing: circuit-level NILM monitoring in 107 units plus resident surveys to build household usage archetypes, an LLM-assisted energy education framework, and an agentic-AI cyber-physical system for grid-responsive housing (both in development)",
     ],
-    funding: "California Energy Commission EPIC program (GFO-20-305)",
+    funding: "California Energy Commission EPIC program (GFO-20-305); prime recipient National CORE",
   },
   {
     range: "2022–2024",
@@ -221,11 +259,12 @@ export const MENTORSHIP = [
   { name: "Sue Young Choi", level: "Ph.D.", range: "2026–Present", note: "Intelligent built environments & neurodivergence; longitudinal EMA data processing" },
   { name: "Yuxin Yang", level: "Ph.D.", range: "2025–Present", note: "Explainable ML for residential electricity use; first-authored manuscript under review at Advanced Engineering Informatics" },
   { name: "Tao Zang", level: "Ph.D.", range: "2024–Present", note: "Multimodal occupational stress sensing; first-authored Indoor Environments (2026) and ASCE i3CE 2025" },
-  { name: "Antonin Brun", level: "Ph.D.", range: "2023–Present", note: "Adaptive environmental interventions; first-authored ACM CHI Extended Abstracts (2025)" },
+  { name: "Antonin Brun", level: "Ph.D.", range: "2023–Present", note: "Adaptive environmental interventions; first-authored ACM CHI Extended Abstracts (2025) and a dynamic-lighting and stress manuscript under review at Building and Environment" },
   { name: "Mireya Reyes", level: "Ph.D.", range: "2024–2026", note: "Sleep-work dynamics; first-authored manuscript submitted to Sleep Health" },
   { name: "Nathaniel Trujillo", level: "M.S.", range: "2026–Present", note: "Matrix profile methods for IEQ time-series pattern discovery" },
   { name: "Aadish Panchmia", level: "M.S.", range: "Summer 2024", note: "Residential utility data extraction; now Project Engineer, Moss & Associates" },
   { name: "Haotong Fu", level: "B.Sc.", range: "Spring 2023", note: "Physiological signal preprocessing; now M.S. student, Computer Science, USC" },
+  { name: "USC SHINE high-school students", level: "High school", range: "2023–2024", note: "Guided a productivity-prediction project from IEQ data (2024) and a four-student cohort building resident-facing energy dashboards for affordable housing (2023); one mentee co-authored a Nature article (2025) on the experience" },
 ];
 
 export const AWARDS = [
@@ -235,22 +274,24 @@ export const AWARDS = [
   "USC Graduate School Fellowship, 2024–2025",
   "Das Family Travel Award (three-time recipient), 2023, 2024, 2025",
   "USC GSG Professional Development Grant (ASHRAE Winter Conference), 2025",
+  "Selected participant, Future of the Building Industry and Ph.D. Symposium, University of Nebraska–Lincoln, 2024",
   "First place, HBI Online Hackathon (NSF-funded), 2022",
+  "Qualified member, Iranian National Elites Foundation, 2016–present",
   "Top 0.1% among 260,000 participants, Iranian nationwide university entrance exam, 2012",
 ];
 
 export const SERVICE = [
   "Journal reviewer: 51 reviews across 11 journals, including Building and Environment (19), Energy and Buildings (8), and ASCE OPEN (6)",
   "Conference reviewer, ASCE i3CE 2024 & 2025 (7 papers)",
-  "Member, ASCE Visualization, Information Modeling, and Simulation (VIMS) Committee, 2025–Present",
-  "Member, CIB W107 Construction in Developing Countries Committee, 2025–Present",
+  "Student member, ASCE Visualization, Information Modeling, and Simulation (VIMS) Committee, 2025–Present",
+  "Student member, CIB W107 Construction in Developing Countries Committee, 2025–Present",
   "Student member, ASHRAE, 2024–Present",
 ];
 
+// href: "" shows "Coming soon". When a repo is ready, paste its URL into href.
 export const PROJECTS = [
-  { title: "IEQ sliding-window clustering", tag: "UMAP / HDBSCAN", desc: "Multi-cohort Awair sensor data reduced to latent indoor-environment regimes, run on USC's CARC HPC.", href: "#" },
-  { title: "CO₂ MSTL decomposition pipeline", tag: "Time series", desc: "Weekly-template decomposition with gap-filling and drift correction across a multi-workspace batch at 1-minute resolution.", href: "#" },
-  { title: "Multilevel mediation analysis", tag: "R / brms", desc: "IEQ features as mediators between workspace location and NASA-TLX workload, with parallelized sensitivity analyses.", href: "#" },
-  { title: "NILM resident archetype pipeline", tag: "Python / explainable ML", desc: "Circuit-level load data across 107 affordable-housing units reduced to household usage archetypes for personalized energy education.", href: "#" },
+  { title: "Bayesian change-point detection for IEQ", tag: "Bayesian / time series", desc: "Pattern recognition and regime discovery in indoor environmental quality time series, finding where an indoor environment shifts into a new regime.", href: "" },
+  { title: "Hidden Markov models for IEQ states", tag: "HMM / time series", desc: "Latent-state models that describe how indoor environmental time series move between recurring conditions.", href: "" },
+  { title: "Point-anomaly cleaning pipeline for IEQ data", tag: "Python / data quality", desc: "A pipeline that detects and removes point anomalies from indoor environmental sensor data before analysis.", href: "" },
 ];
 
