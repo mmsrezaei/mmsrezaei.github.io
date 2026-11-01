@@ -194,7 +194,7 @@ export default function App() {
             <ul>
               <li><strong>Well-being.</strong> Health, comfort, stress, and sleep of the people inside buildings.</li>
               <li><strong>Sustainability.</strong> Energy affordability and demand flexibility that do not shift cost onto residents.</li>
-              <li><strong>Resilience.</strong> Habitability as life support, from homes to space habitats.</li>
+              <li><strong>Resilience.</strong> Habitability as life support.</li>
               <li><strong>Equity, at the core.</strong> Each pillar is judged by who it serves and who it leaves out.</li>
             </ul>
           </div>
