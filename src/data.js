@@ -14,12 +14,12 @@ export const MOTTOS = {
 };
 
 export const INTERESTS = [
-  "Occupant health, comfort, and well-being in buildings",
-  "Multimodal sensing and human-state modeling",
-  "Person-centered digital twins and transferable occupant models",
-  "Human-AI negotiation in physically adaptive spaces",
-  "Habitability as life support, from homes to space habitats",
-  "Energy affordability, demand flexibility, and equity in housing",
+  "Occupant health and comfort",
+  "Multimodal sensing",
+  "Digital twins",
+  "Human-building interaction",
+  "Habitability",
+  "Energy affordability",
 ];
 
 // Humanitarian roots, drawn from the CV (volunteer leadership and service).
@@ -75,7 +75,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2025-09-01",
+    date: "2025",
     dateLabel: "",
     title: "NSF M3X award funded: Embodied Intelligence in Smart Workspaces",
     desc: "A $540,000 NSF award (CMMI, M3X program, 2025–2028) led by Prof. Burçin Becerik-Gerber with Prof. Gale Lucas and Prof. Yasser Khan as co-PIs. I contributed to the methodology and proposal, drawing on our NSF-funded longitudinal hybrid-work study.",
@@ -85,7 +85,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2025-03-12",
+    date: "2025",
     dateLabel: "",
     title: "Selected as an NSF CPS Rising Star",
     desc: "One of 30 Ph.D. students and postdocs chosen nationwide from 170+ applicants for the 2025 CPS Rising Stars Workshop at Vanderbilt University, where I presented a poster on personalized cyber-physical systems for health and well-being.",
@@ -95,7 +95,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2024-11-15",
+    date: "2024",
     dateLabel: "",
     title: "Palm City Transit Village presented at Greenbuild 2024",
     desc: "Represented the USC research team on a panel with National CORE, Arup, and Studio E Architects about a 288-unit all-electric affordable housing development with a solar-and-storage microgrid.",
@@ -105,7 +105,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2024-03-04",
+    date: "2024",
     dateLabel: "",
     title: "CEC EPIC Phase II funded",
     desc: "The California Energy Commission funded Phase II of the EPIC affordable-housing project, an $8M consortium award led by National CORE (2023–2027). I lead USC's research on resident engagement, energy-use monitoring, and household energy affordability and demand flexibility.",
@@ -114,23 +114,13 @@ export const NEWS = [
     image: null,
     placeholder: false,
   },
-  {
-    date: "",
-    dateLabel: "",
-    title: "Add a news item",
-    desc: "Short description of the update: a talk, award, new paper, or media mention. Copy this block in the NEWS array in data.js and fill in the fields, or delete it.",
-    link: "",
-    linkLabel: "",
-    image: null,
-    placeholder: true,
-  },
 ];
 
 export const PERSONAL_PHOTOS = [
-  { src: null, caption: "Add a photo + caption" },
-  { src: null, caption: "Add a photo + caption" },
-  { src: null, caption: "Add a photo + caption" },
-  { src: null, caption: "Add a photo + caption" },
+  { src: "./images/personal/palos-verdes.jpg", caption: "Pacific Coast, Palos Verdes, California" },
+  { src: "./images/personal/glacier.jpg", caption: "Glacier National Park, Montana" },
+  { src: "./images/personal/san-juan.jpg", caption: "San Juan, Puerto Rico" },
+  { src: "./images/personal/chicago.jpg", caption: "Chicago, Illinois" },
 ];
 
 export const PERSONAL_INTRO =

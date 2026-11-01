@@ -110,10 +110,9 @@ export default function App() {
           <p className="eyebrow">Ph.D. candidate · Civil Engineering · University of Southern California</p>
           <h1>Buildings that listen to the people inside them.</h1>
           <p className="lede">
-            I’m Mirmahdi Seyedrezaei. I study how built environments shape health, safety, and well-being, using
-            multimodal sensing, human-state modeling, and longitudinal machine learning. The goal is rigorous,
-            deployable work that helps homes, offices, and affordable housing adapt to the people in them, especially
-            those who can least afford a bad building.
+            I’m Mirmahdi Seyedrezaei. My research explores how built environments affect human well-being,
+            performance, and comfort, using multimodal sensing and machine learning to develop smarter,
+            more adaptive, and human-centered buildings.
           </p>
           <div className="cta-row">
             <a className="btn solid" href={CV} target="_blank" rel="noreferrer">Download CV</a>
@@ -176,7 +175,7 @@ export default function App() {
             <h3>Affordable housing and energy burden</h3>
             <p>Behavioral, financial, and circuit-level analyses of energy use in low-income housing, informing how solar benefits and demand response reach residents.</p>
             <p className="for">For residents who pay the bill and had no say in the design.</p>
-            <p className="stat">$8M CEC consortium project · 107 units monitored</p>
+            <p className="stat">$8M California Energy Commission project · 100+ units studied</p>
           </article>
           <article className="card">
             <p className="tag">Equity framework</p>
