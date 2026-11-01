@@ -73,7 +73,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2025-09-01",
+    date: "2025",
     dateLabel: "",
     title: "NSF M3X award funded: Embodied Intelligence in Smart Workspaces",
     desc: "A $540,000 NSF award (CMMI, M3X program, 2025–2028) led by Prof. Burçin Becerik-Gerber with Prof. Gale Lucas and Prof. Yasser Khan as co-PIs. I contributed to the methodology and proposal, drawing on our NSF-funded longitudinal hybrid-work study.",
@@ -83,7 +83,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2025-03-12",
+    date: "2025",
     dateLabel: "",
     title: "Selected as an NSF CPS Rising Star",
     desc: "One of 30 Ph.D. students and postdocs chosen nationwide from 170+ applicants for the 2025 CPS Rising Stars Workshop at Vanderbilt University, where I presented a poster on personalized cyber-physical systems for health and well-being.",
@@ -93,7 +93,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2024-11-15",
+    date: "2024",
     dateLabel: "",
     title: "Palm City Transit Village presented at Greenbuild 2024",
     desc: "Represented the USC research team on a panel with National CORE, Arup, and Studio E Architects about a 288-unit all-electric affordable housing development with a solar-and-storage microgrid.",
@@ -103,7 +103,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2024-03-04",
+    date: "2024",
     dateLabel: "",
     title: "CEC EPIC Phase II funded",
     desc: "The California Energy Commission funded Phase II of the EPIC affordable-housing project, an $8M consortium award led by National CORE (2023–2027). I lead USC's research on resident engagement, energy-use monitoring, and household energy affordability and demand flexibility.",
@@ -112,24 +112,19 @@ export const NEWS = [
     image: null,
     placeholder: false,
   },
-  {
-    date: "",
-    dateLabel: "",
-    title: "Add a news item",
-    desc: "Short description of the update: a talk, award, new paper, or media mention. Copy this block in the NEWS array in data.js and fill in the fields, or delete it.",
-    link: "",
-    linkLabel: "",
-    image: null,
-    placeholder: true,
-  },
 ];
 
 export const PERSONAL_PHOTOS = [
-  { src: null, caption: "Add a photo + caption" },
-  { src: null, caption: "Add a photo + caption" },
-  { src: null, caption: "Add a photo + caption" },
-  { src: null, caption: "Add a photo + caption" },
+  { src: "./images/palos-verdes.jpeg", caption: "Pacific Coast, Palos Verdes, California" },
+  { src: "./images/glacier.jpeg", caption: "Glacier National Park, Montana" },
+  { src: "./images/san-juan.jpeg", caption: "San Juan, Puerto Rico" },
+  { src: "./images/chicago.jpeg", caption: "Chicago, Illinois" },
+    { src: "./images/washingtonDC.jpeg", caption: "Washington, DC" },
+  { src: "./images/yellowstone.jpeg", caption: "Yellowstone National Park, Montana" },
+  { src: "./images/sedona.jpeg", caption: "Sedona, Arizona" },
+  { src: "./images/neworleans.jpeg", caption: "New Orleans , Louisiana" },
 ];
+
 
 export const PERSONAL_INTRO =
   "Away from the lab, I spend my time with my partner and our kittens. We bike along the Pacific Coast, hike, chase sunsets, and take road trips. I also love to travel, visit attractions, and unwind with a good TV show or movie.";
@@ -270,8 +265,8 @@ export const AWARDS = [
   "USC GSG Professional Development Grant (ASHRAE Winter Conference), 2025",
   "Selected participant, Future of the Building Industry and Ph.D. Symposium, University of Nebraska–Lincoln, 2024",
   "First place, HBI Online Hackathon (NSF-funded), 2022",
-  "Qualified member, Iranian National Elites Foundation, 2016–present",
-  "Top 0.1% among 260,000 participants, Iranian nationwide university entrance exam, 2012",
+  /* "Qualified member, Iranian National Elites Foundation, 2016–present",*/
+  /*"Top 0.1% among 260,000 participants, Iranian nationwide university entrance exam, 2012",*/
 ];
 
 export const SERVICE = [
