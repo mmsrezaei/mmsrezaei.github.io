@@ -119,7 +119,7 @@ export const PERSONAL_PHOTOS = [
   { src: "./images/glacier.jpeg", caption: "Glacier National Park, Montana" },
   { src: "./images/san-juan.jpeg", caption: "San Juan, Puerto Rico" },
   { src: "./images/chicago.jpeg", caption: "Chicago, Illinois" },
-    { src: "./images/washingtonDC.jpeg", caption: "Washington, DC" },
+  { src: "./images/washingtonDC.jpeg", caption: "Washington, DC" },
   { src: "./images/yellowstone.jpeg", caption: "Yellowstone National Park, Montana" },
   { src: "./images/sedona.jpeg", caption: "Sedona, Arizona" },
   { src: "./images/neworleans.jpeg", caption: "New Orleans , Louisiana" },
