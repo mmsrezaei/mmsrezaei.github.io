@@ -8,18 +8,16 @@
 export const PROFILE_PHOTO = "./images/profile.jpeg";
 export const PROFILE_ALT = "Portrait of Mirmahdi Seyedrezaei";
 
-export const MOTTOS = {
-  first: { before: "We are", big: "bigger", mid: "than our", small: "problems", after: "." },
-  second: "This too shall pass.",
-};
+// Line typed out at the top of the page.
+export const TYPED_LINE = "This too shall pass.";
 
 export const INTERESTS = [
-  "Occupant health and comfort",
-  "Multimodal sensing",
-  "Digital twins",
-  "Human-building interaction",
-  "Habitability",
-  "Energy affordability",
+  "Occupant health, comfort, and well-being in buildings",
+  "Multimodal sensing and human-state modeling",
+  "Person-centered digital twins and transferable occupant models",
+  "Human-AI negotiation in physically adaptive spaces",
+  "Habitability as life support, from homes to space habitats",
+  "Energy affordability, demand flexibility, and equity in housing",
 ];
 
 // Humanitarian roots, drawn from the CV (volunteer leadership and service).
@@ -75,7 +73,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2025",
+    date: "2025-09-01",
     dateLabel: "",
     title: "NSF M3X award funded: Embodied Intelligence in Smart Workspaces",
     desc: "A $540,000 NSF award (CMMI, M3X program, 2025–2028) led by Prof. Burçin Becerik-Gerber with Prof. Gale Lucas and Prof. Yasser Khan as co-PIs. I contributed to the methodology and proposal, drawing on our NSF-funded longitudinal hybrid-work study.",
@@ -85,7 +83,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2025",
+    date: "2025-03-12",
     dateLabel: "",
     title: "Selected as an NSF CPS Rising Star",
     desc: "One of 30 Ph.D. students and postdocs chosen nationwide from 170+ applicants for the 2025 CPS Rising Stars Workshop at Vanderbilt University, where I presented a poster on personalized cyber-physical systems for health and well-being.",
@@ -95,7 +93,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2024",
+    date: "2024-11-15",
     dateLabel: "",
     title: "Palm City Transit Village presented at Greenbuild 2024",
     desc: "Represented the USC research team on a panel with National CORE, Arup, and Studio E Architects about a 288-unit all-electric affordable housing development with a solar-and-storage microgrid.",
@@ -105,7 +103,7 @@ export const NEWS = [
     placeholder: false,
   },
   {
-    date: "2024",
+    date: "2024-03-04",
     dateLabel: "",
     title: "CEC EPIC Phase II funded",
     desc: "The California Energy Commission funded Phase II of the EPIC affordable-housing project, an $8M consortium award led by National CORE (2023–2027). I lead USC's research on resident engagement, energy-use monitoring, and household energy affordability and demand flexibility.",
@@ -114,13 +112,23 @@ export const NEWS = [
     image: null,
     placeholder: false,
   },
+  {
+    date: "",
+    dateLabel: "",
+    title: "Add a news item",
+    desc: "Short description of the update: a talk, award, new paper, or media mention. Copy this block in the NEWS array in data.js and fill in the fields, or delete it.",
+    link: "",
+    linkLabel: "",
+    image: null,
+    placeholder: true,
+  },
 ];
 
 export const PERSONAL_PHOTOS = [
-  { src: "./images/palos-verdes.jpeg", caption: "Pacific Coast, Palos Verdes, California" },
-  { src: "./images/glacier.jpeg", caption: "Glacier National Park, Montana" },
-  { src: "./images/san-juan.jpeg", caption: "San Juan, Puerto Rico" },
-  { src: "./images/chicago.jpeg", caption: "Chicago, Illinois" },
+  { src: null, caption: "Add a photo + caption" },
+  { src: null, caption: "Add a photo + caption" },
+  { src: null, caption: "Add a photo + caption" },
+  { src: null, caption: "Add a photo + caption" },
 ];
 
 export const PERSONAL_INTRO =
@@ -245,16 +253,12 @@ export const TEACHING = [
   { range: "2015–2017", title: "Teaching Assistant", org: "Sharif University of Technology", detail: "Design of Steel Structures I & II" },
 ];
 
+// Kept generic on purpose: no names, only the kinds of students and projects.
 export const MENTORSHIP = [
-  { name: "Sue Young Choi", level: "Ph.D.", range: "2026–Present", note: "Intelligent built environments & neurodivergence; longitudinal EMA data processing" },
-  { name: "Yuxin Yang", level: "Ph.D.", range: "2025–Present", note: "Explainable ML for residential electricity use; first-authored manuscript under review at Advanced Engineering Informatics" },
-  { name: "Tao Zang", level: "Ph.D.", range: "2024–Present", note: "Multimodal occupational stress sensing; first-authored Indoor Environments (2026) and ASCE i3CE 2025" },
-  { name: "Antonin Brun", level: "Ph.D.", range: "2023–Present", note: "Adaptive environmental interventions; first-authored ACM CHI Extended Abstracts (2025) and a dynamic-lighting and stress manuscript under review at Building and Environment" },
-  { name: "Mireya Reyes", level: "Ph.D.", range: "2024–2026", note: "Sleep-work dynamics; first-authored manuscript submitted to Sleep Health" },
-  { name: "Nathaniel Trujillo", level: "M.S.", range: "2026–Present", note: "Matrix profile methods for IEQ time-series pattern discovery" },
-  { name: "Aadish Panchmia", level: "M.S.", range: "Summer 2024", note: "Residential utility data extraction; now Project Engineer, Moss & Associates" },
-  { name: "Haotong Fu", level: "B.Sc.", range: "Spring 2023", note: "Physiological signal preprocessing; now M.S. student, Computer Science, USC" },
-  { name: "USC SHINE high-school students", level: "High school", range: "2023–2024", note: "Guided a productivity-prediction project from IEQ data (2024) and a four-student cohort building resident-facing energy dashboards for affordable housing (2023); one mentee co-authored a Nature article (2025) on the experience" },
+  { title: "Doctoral students", level: "Ph.D.", range: "2023–Present", note: "Mentored five Ph.D. students on intelligent built environments, explainable machine learning for residential electricity use, multimodal occupational stress sensing, adaptive environmental interventions, and sleep-work dynamics. Several have led first-authored papers and conference abstracts." },
+  { title: "Master’s students", level: "M.S.", range: "2024–Present", note: "Guided projects on matrix profile methods for IEQ time-series pattern discovery and on residential utility data extraction." },
+  { title: "Undergraduate researchers", level: "B.Sc.", range: "2023", note: "Supervised research on physiological signal preprocessing for occupant-state models." },
+  { title: "USC SHINE high-school students", level: "High school", range: "2023–2024", note: "Guided a productivity-prediction project built on IEQ data (2024) and a four-student cohort building resident-facing energy dashboards for affordable housing (2023). One mentee co-authored a Nature article (2025) on the experience." },
 ];
 
 export const AWARDS = [
@@ -284,4 +288,3 @@ export const PROJECTS = [
   { title: "Hidden Markov models for IEQ states", tag: "HMM / time series", desc: "Latent-state models that describe how indoor environmental time series move between recurring conditions.", href: "" },
   { title: "Point-anomaly cleaning pipeline for IEQ data", tag: "Python / data quality", desc: "A pipeline that detects and removes point anomalies from indoor environmental sensor data before analysis.", href: "" },
 ];
-

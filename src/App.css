@@ -45,8 +45,6 @@
 .nav-links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
 .nav-links a { font-size: 13.5px; color: var(--ink-2); }
 .nav-links a:hover { color: var(--lapis); }
-.nav-links a.nav-cv { border: 1.5px solid var(--lapis); color: var(--lapis); padding: 3px 12px; border-radius: 999px; font-weight: 700; }
-.nav-links a.nav-cv:hover { background: var(--lapis); color: #fff; }
 
 /* ---------- Hero ---------- */
 .hero { max-width: 1020px; margin: 0 auto; padding: 72px 28px 56px; display: grid; grid-template-columns: 1fr 330px; gap: 56px; align-items: center; }
@@ -95,13 +93,26 @@
 .more-link { font-size: 13px; font-weight: 700; color: var(--lapis); margin-top: auto; padding-top: 6px; }
 .more-link:hover { text-decoration: underline; }
 
-/* ---------- Mottos ---------- */
-.mottos { padding-top: 40px; }
-.motto-1 { font-family: 'Young Serif', serif; font-size: clamp(32px, 5.6vw, 66px); line-height: 1.12; color: var(--ink); max-width: 17ch; }
-.motto-1 .big { font-size: 1.45em; color: var(--lapis); line-height: 1; }
-.motto-1 .small { font-size: 0.34em; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); vertical-align: 0.15em; }
-.motto-row { margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line); }
-.motto-2 { font-family: 'Young Serif', serif; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; }
+/* ---------- Typed line, pillars ---------- */
+.type-band { position: relative; max-width: 1020px; margin: 0 auto; padding: 44px 28px 0; font-family: 'Young Serif', Georgia, serif; font-size: clamp(34px, 7.4vw, 78px); line-height: 1.1; color: var(--lapis); }
+.type-band + .hero { padding-top: 32px; }
+.type-ghost { visibility: hidden; display: block; }
+.type-live { position: absolute; left: 28px; right: 28px; top: 44px; display: block; }
+.caret { display: inline-block; width: 0.07em; height: 0.92em; margin-left: 0.06em; vertical-align: -0.08em; background: var(--sun); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+.pillars-wrap { display: grid; grid-template-columns: minmax(0, 380px) 1fr; gap: 40px; align-items: center; margin-bottom: 28px; }
+.pillars { width: 100%; height: auto; display: block; }
+.pl-tri { fill: rgba(35, 64, 122, 0.05); stroke: var(--lapis); stroke-width: 2; stroke-linejoin: round; opacity: 0.55; }
+.pl-spoke { stroke: var(--sun); stroke-width: 2; stroke-dasharray: 3 6; stroke-linecap: round; }
+.pl-halo { fill: rgba(231, 161, 43, 0.22); transform-origin: 200px 210px; animation: pulse 3.6s ease-in-out infinite; }
+.pl-core { fill: var(--sun); }
+.pl-core-t { font: 400 15px 'Young Serif', serif; fill: var(--ink); }
+.pl-t { font: 400 15px 'Young Serif', serif; fill: #fff; }
+@keyframes pulse { 50% { transform: scale(1.14); } }
+@media (prefers-reduced-motion: reduce) { .pl-halo { animation: none; } }
+.pillars-copy ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; font-size: 15px; color: var(--ink-2); }
+.pillars-copy strong { color: var(--ink); }
 .chips { list-style: none; margin: -6px 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { font-size: 12.5px; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: rgba(255, 255, 255, 0.45); }
 .soon { align-self: flex-start; margin-top: auto; font: 500 11px 'DM Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase; color: var(--amber-text); background: #F8E2BC; border-radius: 999px; padding: 3px 10px; }
@@ -170,7 +181,9 @@
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 44px; }
   .window { order: -1; max-width: 250px; }
-  .cards.three, .cards.two, .trio { grid-template-columns: 1fr; }
+  .cards.three, .cards.two, .trio, .pillars-wrap { grid-template-columns: 1fr; }
+  .type-band { padding: 28px 20px 0; }
+  .type-live { left: 20px; right: 20px; top: 28px; }
   .photos { grid-template-columns: repeat(2, 1fr); }
   .xp, .row { grid-template-columns: 1fr; gap: 4px; }
   .pub { grid-template-columns: 1fr; gap: 6px; }

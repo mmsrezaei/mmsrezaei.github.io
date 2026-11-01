@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import {
-  PROFILE_PHOTO, PROFILE_ALT, MOTTOS, INTERESTS, HUMANITARIAN, NEWS, PERSONAL_PHOTOS, PERSONAL_INTRO,
+  PROFILE_PHOTO, PROFILE_ALT, TYPED_LINE, INTERESTS, HUMANITARIAN, NEWS, PERSONAL_PHOTOS, PERSONAL_INTRO,
   PUBLICATIONS, EDUCATION, EXPERIENCE, TEACHING, MENTORSHIP, AWARDS, SERVICE, PROJECTS,
 } from "./data.js";
 
 const SCHOLAR = "https://scholar.google.com/citations?user=O6CRJkMAAAAJ&hl=en";
 const ORCID = "https://orcid.org/0000-0003-4169-200X";
 const LINKEDIN = "https://www.linkedin.com/in/mirmahdi-seyedrezaei/";
-const CV = "./CV_Mirmahdi_Seyedrezaei.pdf";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -45,6 +44,47 @@ function useDayCycle(siteRef, readoutRef) {
   }, [siteRef, readoutRef]);
 }
 
+/* Types a line out letter by letter on load. Reduced-motion users get the full line at once. */
+function useTyping(text, speed = 95, delay = 500) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setN(text.length); return; }
+    let i = 0, t;
+    const tick = () => { i += 1; setN(i); if (i < text.length) t = setTimeout(tick, speed + Math.random() * 55); };
+    t = setTimeout(tick, delay);
+    return () => clearTimeout(t);
+  }, [text, speed, delay]);
+  return n;
+}
+
+/* Well-being, sustainability and resilience as three pillars, joined to each other and to equity at the core. */
+function PillarsDiagram() {
+  const nodes = [
+    { x: 200, y: 52, w: 128, label: "Well-being", c: "var(--turq)" },
+    { x: 66, y: 292, w: 128, label: "Sustainability", c: "var(--lapis)" },
+    { x: 334, y: 292, w: 128, label: "Resilience", c: "var(--amber-text)" },
+  ];
+  const core = { x: 200, y: 210 };
+  return (
+    <svg className="pillars" viewBox="0 0 400 340" role="img"
+      aria-label="Three pillars, well-being, sustainability and resilience, connected to each other and to equity at the core">
+      <polygon points="200,52 66,292 334,292" className="pl-tri" />
+      {nodes.map((n) => (
+        <line key={n.label} x1={core.x} y1={core.y} x2={n.x} y2={n.y} className="pl-spoke" />
+      ))}
+      <circle cx={core.x} cy={core.y} r="52" className="pl-halo" />
+      <circle cx={core.x} cy={core.y} r="40" className="pl-core" />
+      <text x={core.x} y={core.y + 5} textAnchor="middle" className="pl-core-t">Equity</text>
+      {nodes.map((n) => (
+        <g key={n.label}>
+          <rect x={n.x - n.w / 2} y={n.y - 22} width={n.w} height="44" rx="22" fill={n.c} />
+          <text x={n.x} y={n.y + 5} textAnchor="middle" className="pl-t">{n.label}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 function Badge({ status }) {
   const cls = status === "Published" ? "ok" : status === "Submitted" ? "sub" : "prep";
   return <span className={"badge " + cls}>{status}</span>;
@@ -72,12 +112,10 @@ export default function App() {
 
   const [filter, setFilter] = useState("All");
   const [showAllPubs, setShowAllPubs] = useState(false);
-  const [showAllMentees, setShowAllMentees] = useState(false);
 
   const filtered = filter === "All" ? PUBLICATIONS : PUBLICATIONS.filter((p) => p.type === filter);
   const pubs = showAllPubs ? filtered : filtered.slice(0, 8);
-  const mentees = showAllMentees ? MENTORSHIP : MENTORSHIP.slice(0, 4);
-  const m = MOTTOS;
+  const typed = TYPED_LINE.slice(0, useTyping(TYPED_LINE));
 
   return (
     <div className="site" ref={siteRef}>
@@ -93,7 +131,6 @@ export default function App() {
       <nav className="nav" aria-label="Main">
         <a className="nav-mark" href="#top">Mirmahdi Seyedrezaei</a>
         <div className="nav-links">
-          <a href="#mottos">Mottos</a>
           <a href="#research">Research</a>
           <a href="#publications">Publications</a>
           <a href="#experience">Experience</a>
@@ -101,22 +138,26 @@ export default function App() {
           <a href="#news">News</a>
           <a href="#teaching">Teaching</a>
           <a href="#personal">Personal</a>
-          <a className="nav-cv" href={CV} target="_blank" rel="noreferrer">CV</a>
         </div>
       </nav>
+
+      <div className="type-band" role="heading" aria-level="2" aria-label={TYPED_LINE}>
+        <span className="type-ghost" aria-hidden="true">{TYPED_LINE}</span>
+        <span className="type-live" aria-hidden="true">{typed}<i className="caret" /></span>
+      </div>
 
       <header className="hero" id="top">
         <div className="hero-copy">
           <p className="eyebrow">Ph.D. candidate · Civil Engineering · University of Southern California</p>
           <h1>Buildings that listen to the people inside them.</h1>
           <p className="lede">
-            I’m Mirmahdi Seyedrezaei. My research explores how built environments affect human well-being,
-            performance, and comfort, using multimodal sensing and machine learning to develop smarter,
-            more adaptive, and human-centered buildings.
+            I’m Mirmahdi Seyedrezaei. I study how built environments shape health, safety, and well-being, using
+            multimodal sensing, human-state modeling, and longitudinal machine learning. The goal is rigorous,
+            deployable work that helps homes, offices, and affordable housing adapt to the people in them, especially
+            those who can least afford a bad building.
           </p>
           <div className="cta-row">
-            <a className="btn solid" href={CV} target="_blank" rel="noreferrer">Download CV</a>
-            <a className="btn" href={SCHOLAR} target="_blank" rel="noreferrer">Google Scholar</a>
+            <a className="btn solid" href={SCHOLAR} target="_blank" rel="noreferrer">Google Scholar</a>
             <a className="btn" href={ORCID} target="_blank" rel="noreferrer">ORCID</a>
             <a className="btn" href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn</a>
             <a className="btn" href="mailto:seyedrez@usc.edu">seyedrez@usc.edu</a>
@@ -143,22 +184,21 @@ export default function App() {
         </figure>
       </header>
 
-      {/* ---------- Mottos ---------- */}
-      <section className="sec mottos" aria-labelledby="mottos">
-        <SectionHead id="mottos" title="Two lines I keep" />
-        <p className="motto-1">
-          {m.first.before} <span className="big">{m.first.big}</span> {m.first.mid}{" "}
-          <span className="small">{m.first.small}</span>
-          {m.first.after}
-        </p>
-        <div className="motto-row">
-          <p className="motto-2">{m.second}</p>
-        </div>
-      </section>
-
       {/* ---------- Research ---------- */}
       <section className="sec" aria-labelledby="research">
         <SectionHead id="research" title="Research" note="three threads, one question: who is the building for?" />
+        <div className="pillars-wrap">
+          <PillarsDiagram />
+          <div className="pillars-copy">
+            <p className="tag">The frame I work in</p>
+            <ul>
+              <li><strong>Well-being.</strong> Health, comfort, stress, and sleep of the people inside buildings.</li>
+              <li><strong>Sustainability.</strong> Energy affordability and demand flexibility that do not shift cost onto residents.</li>
+              <li><strong>Resilience.</strong> Habitability as life support, from homes to space habitats.</li>
+              <li><strong>Equity, at the core.</strong> Each pillar is judged by who it serves and who it leaves out.</li>
+            </ul>
+          </div>
+        </div>
         <ul className="chips" aria-label="Research interests">
           {INTERESTS.map((t) => <li key={t}>{t}</li>)}
         </ul>
@@ -175,7 +215,7 @@ export default function App() {
             <h3>Affordable housing and energy burden</h3>
             <p>Behavioral, financial, and circuit-level analyses of energy use in low-income housing, informing how solar benefits and demand response reach residents.</p>
             <p className="for">For residents who pay the bill and had no say in the design.</p>
-            <p className="stat">$8M California Energy Commission project · 100+ units studied</p>
+            <p className="stat">$8M CEC consortium project · 107 units monitored</p>
           </article>
           <article className="card">
             <p className="tag">Equity framework</p>
@@ -296,19 +336,14 @@ export default function App() {
           ))}
         </div>
         <div className="cards two mentees">
-          {mentees.map((mm, i) => (
+          {MENTORSHIP.map((mm, i) => (
             <article className="card slim" key={i}>
-              <h3>{mm.name} <span className="lvl">{mm.level}</span></h3>
+              <h3>{mm.title} <span className="lvl">{mm.level}</span></h3>
               <p className="range-s">{mm.range}</p>
               <p className="small-text">{mm.note}</p>
             </article>
           ))}
         </div>
-        {MENTORSHIP.length > 4 && (
-          <button className="more" onClick={() => setShowAllMentees(!showAllMentees)}>
-            {showAllMentees ? "Show fewer" : `Show all ${MENTORSHIP.length} mentees`}
-          </button>
-        )}
       </section>
 
       {/* ---------- Projects ---------- */}
