@@ -118,7 +118,6 @@ export const PERSONAL_PHOTOS = [
   { src: "./images/palos-verdes.jpeg", caption: "Pacific Coast, Palos Verdes, California" },
   { src: "./images/glacier.jpeg", caption: "Glacier National Park, Montana" },
   { src: "./images/chicago.jpeg", caption: "Chicago, Illinois" },
-  { src: "./images/washingtonDC.jpeg", caption: "Washington, DC" },
   { src: "./images/sedona.jpeg", caption: "Sedona, Arizona" },
 
 ];
